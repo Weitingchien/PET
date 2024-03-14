@@ -1,0 +1,12 @@
+*.pickle
+.idea
+*.iml
+*.pyc
+*.ipynb
+.ipynb_checkpoints
+.pytest_cache
+glue_data/*
+out/*
+text_classification_datasets
+output
+__pycache__

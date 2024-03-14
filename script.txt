@@ -1,0 +1,51 @@
+python run_training.py \
+--wrapper_type sequence_classifier \
+--train_examples 100 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type bert \
+--model_name_or_path bert-base-uncased \
+--task_name yelp-full \
+--output_dir ./output/yelp \
+--gradient_accumulation_steps 4 \
+--max_steps 250 \
+--do_train \
+--do_eval
+
+
+
+
+unsupervised:
+python3 run_training.py \
+--wrapper_type mlm \
+--train_examples 100 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type bert \ 
+--model_name_or_path bert-base-uncased \
+--task_name yelp-full \
+--output_dir ./output/yelp \
+--do_train \
+--do_eval \
+--max_steps 0 \
+--repetitions 1 \
+--pattern_ids 0 1 2 3
+
+
+PET:
+python3 run_training.py \
+--wrapper_type mlm \
+--train_examples 100 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type roberta \
+--model_name_or_path roberta-large \
+--task_name yelp-full \
+--output_dir ./output/yelp \
+--do_train \
+--do_eval \
+--pattern_ids 0 1 2 3 \
+--lm_train_examples_per_label 10000 \
+--gradient_accumulation_steps 4 \
+--max_steps 250 \
+--max_seq_length 256 \
+--no_cuda \
+--save_train_logits
+
