@@ -16,7 +16,7 @@ one of the supported tasks and datasets.
 """
 import os
 import csv
-import log
+import logging
 import torch
 import argparse
 import statistics
@@ -26,7 +26,7 @@ from collections import defaultdict, Counter
 from wrapper import TransformerModelWrapper, WRAPPER_TYPES
 from utils import set_seed, eq_div, save_logits, LogitsList, InputExample
 
-logger = log.get_logger('root')
+logger = logging.getLogger()
 
 
 
@@ -185,21 +185,11 @@ def main():
     # Label counts in eval_data: Counter({'1': 10000, '3': 10000, '2': 10000, '4': 10000, '5': 10000})
 
     if train_data:
+        """
         print("First training example:")
         print(train_data[0])
         """
-        First training example:
-        {
-            "guid": "train-0",
-            "label": "5",
-            "logits": null,
-            "text_a": "dr. goldberg offers everything i look for in a general practitioner.  he's nice and easy to talk to without being patronizing; he's always on time in seeing his patients; he's affiliated with a top-notch hospital (nyu) which my parents have explained to me is very important in case something happens and you need surgery; and you can get referrals to see specialists without having to see him first.  really, what more do you need?  i'm sitting here trying to think of any complaints i have about him, but i'm really drawing a blank.",
-            "text_b": null
-        }
-        """
-       
-        print(f"Size of train data: {len(train_data)}") # Size of train data: 100
-    
+        print(f"Size of train data: {len(train_data)}")
 
 
     if eval_data:
@@ -210,14 +200,12 @@ def main():
         for attribute, value in eval_data[0].__dict__.items():
             print(f"{attribute}: {value}")
         """
-        print(f"Size of eval data: {len(eval_data)}") # Size of eval data: 50000
-
+        print(f"Size of eval data: {len(eval_data)}")
 
     if args.lm_training or args.save_train_logits or args.use_logits:
         # print(f'args.lm_train_examples_per_label: {args.lm_train_examples_per_label}')
         # Size of all_train_data: 10000 * 5 = 50000(總共有5個標籤,每個標籤各一萬筆訓練樣本)
         all_train_data = load_examples(args.task_name, args.data_dir, args.lm_train_examples_per_label, evaluate=False)
-        print(f'all_train_data[0]: {all_train_data[0]}')
         
         # print("First few examples from all_train_data:")
         """
@@ -229,8 +217,7 @@ def main():
 
     else:
         all_train_data = None
-    # print(f'Size of all_train_data: {len(all_train_data)}') # Size of all_train_data: 50000
-
+    # print(f'Size of all_train_data: {len(all_train_data)}')
 
     if args.use_logits:
         logits = LogitsList.load(args.logits_file).logits # 載入預先計算好的 logits 值
@@ -248,7 +235,6 @@ def main():
             print("---")
         """
 
-
     for pattern_id in args.pattern_ids:
         args.pattern_id = pattern_id
         for iteration in range(args.repetitions):
@@ -264,7 +250,7 @@ def main():
                 wrapper.model.to(device)
 
 
-                # results_dict['train_set_before_training'] = wrapper.eval(train_data, device, **vars(args))['acc']
+                results_dict['train_set_before_training'] = wrapper.eval(train_data, device, **vars(args))['acc']
 
                 pattern_iter_train_data = []
                 pattern_iter_train_data.extend(train_data) # len(task_train_data): 100
@@ -281,23 +267,6 @@ def main():
                     logger.info(
                         f"Loaded {len(additional_data)} additional examples from {p}, total training size is now {len(pattern_iter_train_data)}"
                     )
-                """
-                    additional_data_dir: 添加400個訓練樣本(不包含當前pattern的模型, 綜合其他3個模型預測的標籤的訓練樣本)
-                """
-                print(f'len(pattern_iter_train_data): {len(pattern_iter_train_data)}') # len(pattern_iter_train_data): 500
-                print(f'pattern_iter_train_data[0]: {pattern_iter_train_data[0]}')
-                """
-                pattern_iter_train_data[0]: {
-                    "guid": "train-0",
-                    "label": "5",
-                    "logits": null,
-                    "text_a": "dr. goldberg offers everything i look for in a general practitioner.  he's nice and easy to talk to without being patronizing; he's always on time in seeing his patients; he's affiliated with a top-notch hospital (nyu) which my parents have explained to me is very important in case something happens and you need surgery; and you can get referrals to see specialists without having to see him first.  really, what more do you need?  i'm sitting here trying to think of any complaints i have about him, but i'm really drawing a blank.",
-                    "text_b": null
-                }
-                """
-
-        
-        
 
                 logger.info("Starting training...")
 
@@ -316,7 +285,7 @@ def main():
 
                 logger.info(" global_step = %s, average loss = %s", global_step, tr_loss)
                 logger.info("Training complete")
-            
+
                 results_dict['train_set_after_training'] = wrapper.eval(train_data, device, **vars(args))['acc']
 
                 with open(os.path.join(output_dir, 'results.txt'), 'w') as fh:
@@ -326,7 +295,6 @@ def main():
                 wrapper.save(output_dir)
                 torch.save(args, os.path.join(output_dir, 'training_args.bin'))
                 logger.info("Saving complete")
-            
                 # only for PET training
                 if args.save_train_logits:
                     logits = wrapper.eval(all_train_data, device, output_logits=True, **vars(args))
@@ -336,7 +304,7 @@ def main():
                     wrapper.model = None
                     wrapper = None
                     torch.cuda.empty_cache()
-            
+
             # Evaluation
             if args.do_eval:
                 logger.info("Starting evaluation...")
@@ -375,7 +343,7 @@ def main():
         result_str = f"acc-all-p: {all_mean} +- {all_stdev}"
         logger.info(result_str)
         fh.write(result_str + '\n')
-        
+
 
 if __name__ == "__main__":
     main()

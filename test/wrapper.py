@@ -40,11 +40,11 @@ from transformers import (BertConfig,
 from transformers import __version__ as transformers_version
 # from transformers.data.metrics import simple_accuracy
 
-import log
+import logging
 from preprocessor import SequenceClassifierPreprocessor, MLMPreprocessor
 from utils import InputFeatures
 
-logger = log.get_logger('root')
+logger = logging.getLogger()
 
 CONFIG_NAME = 'wrapper_config.json'
 SEQUENCE_CLASSIFIER_WRAPPER = "sequence_classifier"
@@ -107,7 +107,6 @@ def distillation_loss(predictions, targets, temperature):
     print(f'p: {p}')
     q = F.softmax(targets / temperature, dim=1)
     print(f'q: {q}')
-    print(f'predictions.shape[0]: {predictions.shape[0]}')
     return F.kl_div(p, q, reduction='sum') * (temperature ** 2) / predictions.shape[0]
 
 
@@ -194,8 +193,7 @@ class TransformerModelWrapper:
               max_steps=-1, **_):
 
         print(f'(train) lm_training: {lm_training}')
-        print(f'(train) use_logits: {use_logits}') # (train) use_logits: False
-
+        print(f'(train) use_logits: {use_logits}')
         data_dict = {}
 
         print(f'len(task_train_data): {len(task_train_data)}')

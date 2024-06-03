@@ -45,10 +45,15 @@ def generate_train_set(logits_lists: List[LogitsList], labels: List[str], origin
     :param n_most_likely: if >0, for each label the n_most_likely examples with the highest logits are chosen
     :return: a list of input examples that serves as training set for the next generation
     """
-
+    # Ensures that all LogitsList objects have the same number of logits.
     assert len(set(len(ll.logits) for ll in logits_lists)) == 1
-    num_logits_lists = round(len(logits_lists) * logits_percentage)
+    num_logits_lists = round(len(logits_lists) * logits_percentage) # 根據logits_percentage計算要選擇的logits_lists的數量,然後從logits_lists中隨機選擇該數量的元素
+    """
+        Suppose we have 4 LogitsList objects, and logits_percentage is 0.5.
+        This results in selecting 2 random LogitsList objects.
+    """
     logits_lists = random.sample(logits_lists, k=num_logits_lists)
+    # Converts logits and scores into numpy arrays for processing.
     logits = np.array([ll.logits for ll in logits_lists])
     weights = np.array([ll.score for ll in logits_lists])
 
@@ -90,7 +95,7 @@ def generate_train_set(logits_lists: List[LogitsList], labels: List[str], origin
             examples=examples,
             num_examples=examples_per_label[idx])
         test_set.extend(label_examples)
-
+    print(f'test_set: {test_set}')
     return test_set
 
 
@@ -140,7 +145,7 @@ def main():
     processor = PROCESSORS[args.task_name]()
     labels = processor.get_labels()
 
-    subdirs = next(os.walk(args.logits_dir))[1]
+    subdirs = next(os.walk(args.logits_dir))[1] # 獲取logits_dir目錄下的所有子目錄
 
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
@@ -148,6 +153,7 @@ def main():
     logger.info("Found the following {} subdirectories: {}".format(len(subdirs), subdirs))
 
     all_train_data = load_examples(args.task_name, args.data_dir, args.lm_train_examples_per_label, evaluate=False)
+    # 加載所有的訓練數據,並將每個樣本的label和logits屬性設置為None。
     for example in all_train_data:
         example.label = None
         example.logits = None
@@ -163,17 +169,20 @@ def main():
             logger.warning(f"Skipping subdir '{subdir}' because 'results.txt' or 'logits.txt' not found")
             continue
 
+        # 從results.txt中讀取訓練前的accuracy
         with open(results_file, 'r') as fh:
             results = ast.literal_eval(fh.read())
             result_train = results['train_set_before_training']
 
+        # 從logits.txt中讀取logits,每列(row)表示一個樣本的logits,將其轉換為浮點數
         with open(logits_file, 'r') as fh:
             for line in fh.read().splitlines():
                 example_logits = [float(x) for x in line.split()]
                 logits.append(example_logits)
 
-        logger.info("File {}: Score = {}, #Logits = {}, #Labels = {}".format(
-            results_file, result_train, len(logits), len(logits[0])))
+        logger.info(
+            f"File {results_file}: Score = {result_train}, #Logits = {len(logits)}, #Labels = {len(logits[0])}"
+        )
 
         loglist = LogitsList(score=result_train, logits=logits)
         logits_lists[subdir] = loglist
@@ -188,8 +197,10 @@ def main():
                                               reduction=args.reduction,
                                               n_most_likely=args.n_most_likely)
 
-        InputExample.save_examples(subdir_train_set,
-                                   os.path.join(args.output_dir, subdir + '-train.txt'))
+        InputExample.save_examples(
+            subdir_train_set,
+            os.path.join(args.output_dir, f'{subdir}-train.txt'),
+        )
 
 
 if __name__ == "__main__":

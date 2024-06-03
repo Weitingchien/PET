@@ -10,3 +10,5 @@ out/*
 text_classification_datasets
 output
 __pycache__
+output*/
+LOGITS_FILE

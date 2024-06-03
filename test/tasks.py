@@ -21,10 +21,10 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 from typing import List
 
-import log
+import logging
 from utils import InputExample
 
-logger = log.get_logger('root')
+logger = logging.getLogger()
 
 
 class LimitedExampleList:

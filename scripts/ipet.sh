@@ -48,6 +48,7 @@ else
   exit 1
 fi
 
+# 控制每一次要增加多少訓練樣本
 for ITER in $ITERS; do
 
   if [ $ITER = "1" ]; then
@@ -73,7 +74,7 @@ for ITER in $ITERS; do
     --data_dir ${DATA_DIR} \
     --task_name ${TASK} \
     --lm_train_examples_per_label 10000 \
-    --reduction wmean \
+    --reduction mean \
     --num_examples ${NEW_EXAMPLES} \
     --logits_percentage 0.25
 
@@ -81,7 +82,7 @@ for ITER in $ITERS; do
   python3 run_training.py \
     --data_dir ${DATA_DIR} \
     --model_type roberta \
-    --model_name_or_path roberta-large \
+    --model_name_or_path roberta-base \
     --overwrite_output_dir \
     --task_name ${TASK} \
     --output_dir ${MODEL_DIR}${NEXT_DIR_SUFFIX}/ \
@@ -97,7 +98,6 @@ for ITER in $ITERS; do
     --test_examples -1 \
     --max_steps ${MAX_STEPS} \
     --train_examples ${NUM_EXAMPLES} \
-    --dev_examples 0 \
     --max_seq_length 256 \
     --additional_data_dir ${MODEL_DIR}${DIR_SUFFIX}/next-gen-train-sets/ \
     --wrapper_type mlm \
@@ -112,16 +112,17 @@ for ITER in $ITERS; do
     echo Running merge_logits.py to obtain logits for training the final model...
     python3 merge_logits.py \
       --logits_dir ${MODEL_DIR}${NEXT_DIR_SUFFIX}/ \
-      --output ${MODEL_DIR}${NEXT_DIR_SUFFIX}/logits-wmean.txt \
-      --reduction wmean
+      --output ${MODEL_DIR}${NEXT_DIR_SUFFIX}/logits-mean.txt \
+      --reduction mean
 
     echo Running run_training.py to train the final model...
 
     python3 run_training.py \
+      --wrapper_type sequence_classifier \
       --repetitions 3 \
       --data_dir ${DATA_DIR} \
       --model_type roberta \
-      --model_name_or_path roberta-large \
+      --model_name_or_path roberta-base \
       --overwrite_output_dir \
       --task_name ${TASK} \
       --output_dir ${MODEL_DIR}${NEXT_DIR_SUFFIX}-distilled/ \
@@ -133,11 +134,10 @@ for ITER in $ITERS; do
       --do_eval \
       --test_examples -1 \
       --max_steps 5000 \
-      --dev_examples 0 \
       --train_examples 1 \
       --max_seq_length 256 \
       --temperature 2 \
-      --logits_file ${MODEL_DIR}${NEXT_DIR_SUFFIX}/logits-wmean.txt \
+      --logits_file ${MODEL_DIR}${NEXT_DIR_SUFFIX}/logits-mean.txt \
       --lm_train_examples_per_label 10000
 
     echo Training complete

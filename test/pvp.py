@@ -23,9 +23,9 @@ import torch
 import torch.nn.functional as F
 from transformers import InputExample, PreTrainedTokenizer, GPT2Tokenizer
 
-import log
+import logging
 
-logger = log.get_logger('root')
+logger = logging.getLogger()
 
 
 def _prepare(word: str, tokenizer: PreTrainedTokenizer) -> str:

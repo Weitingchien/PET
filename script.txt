@@ -14,6 +14,69 @@ python run_training.py \
 
 
 
+
+(50)
+Supervised Training and Evaluation: 
+python3 run_training.py \
+--wrapper_type sequence_classifier \
+--train_examples 50 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type roberta \
+--model_name_or_path roberta-base \
+--task_name yelp-full \
+--output_dir ./output_supervised_roberta_50/yelp \
+--do_train \
+--do_eval
+
+
+
+
+
+(100)
+Supervised Training and Evaluation: 
+python3 run_training.py \
+--wrapper_type sequence_classifier \
+--train_examples 100 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type roberta \
+--model_name_or_path roberta-base \
+--task_name yelp-full \
+--output_dir ./output_supervised_roberta_100/yelp \
+--do_train \
+--do_eval
+
+
+
+(1000)
+Supervised Training and Evaluation: 
+python3 run_training.py \
+--wrapper_type sequence_classifier \
+--train_examples 1000 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type roberta \
+--model_name_or_path roberta-base \
+--task_name yelp-full \
+--output_dir ./output_supervised_roberta_1000/yelp \
+--do_train \
+--do_eval
+
+
+(10000)
+Supervised Training and Evaluation: 
+python3 run_training.py \
+--wrapper_type sequence_classifier \
+--train_examples 10000 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type roberta \
+--model_name_or_path roberta-base \
+--task_name yelp-full \
+--output_dir ./output_supervised_roberta_10000/yelp \
+--do_train \
+--do_eval
+
+
+
+
 unsupervised:
 python3 run_training.py \
 --wrapper_type mlm \
@@ -30,7 +93,7 @@ python3 run_training.py \
 --pattern_ids 0 1 2 3
 
 
-PET:
+PET(roberta-large):
 python3 run_training.py \
 --wrapper_type mlm \
 --train_examples 100 \
@@ -49,3 +112,289 @@ python3 run_training.py \
 --no_cuda \
 --save_train_logits
 
+
+
+# gradient_accumulation_steps: 每個批次處理後不會立即更新模型參數，而是會累積多個批次的梯度之後再進行一次參數更新
+# lm_train_examples_per_label 10000: 對於每個標籤, 應使用多少未標記的例子來進行語言模型的訓練(假設我的標籤有5種,每一種都會有10000筆未標籤的例子)
+
+PET(bert):
+python3 run_training.py \
+--wrapper_type mlm \
+--train_examples 100 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type bert \
+--model_name_or_path bert-base-uncased \
+--task_name yelp-full \
+--output_dir ./output/yelp \
+--do_train \
+--do_eval \
+--pattern_ids 0 1 2 3 \
+--lm_train_examples_per_label 10000 \
+--gradient_accumulation_steps 4 \
+--max_steps 1000 \
+--max_seq_length 256 \
+--per_gpu_train_batch_size 1 \
+--per_gpu_helper_batch_size 3 \
+--save_train_logits
+
+
+results without auxiliary language modeling: 
+
+yelp-full: 
+PET(FacebookAI/roberta-base)
+python3 run_training.py \
+--wrapper_type mlm \
+--train_examples 100 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type roberta \
+--model_name_or_path roberta-base \
+--task_name yelp-full \
+--output_dir ./output_roberta_test/yelp \
+--do_train \
+--do_eval \
+--pattern_ids 0 1 2 3 \
+--lm_train_examples_per_label 10000 \
+--gradient_accumulation_steps 4 \
+--max_steps 250  \
+--max_seq_length 256 \
+--save_train_logits
+
+
+
+yelp-full(output_roberta_test_iPET_100): 
+ python3 run_training.py \
+    --data_dir ./text_classification_datasets/yelp_review_full_csv \
+    --model_type roberta \
+    --model_name_or_path roberta-base \
+    --overwrite_output_dir \
+    --task_name yelp-full \
+    --output_dir ./output_roberta_test_iPET_100/yelp-i1-test \
+    --do_train \
+    --weight_decay 0.01 \
+    --learning_rate 1e-5 \
+    --do_eval \
+    --per_gpu_train_batch_size 1 \
+    --per_gpu_helper_batch_size 3 \
+    --lm_training \
+    --alpha 0.9999 \
+    --gradient_accumulation_steps 4 \
+    --test_examples -1 \
+    --max_steps 1000 \
+    --train_examples 100 \
+    --max_seq_length 256 \
+    --additional_data_dir ./output_roberta_test_iPET_100/yelp/next-gen-train-sets \
+    --wrapper_type mlm \
+    --repetitions 3 \
+    --save_train_logits \
+    --lm_train_examples_per_label 10000 \
+    --pattern_ids 0 1 2 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mnli:
+python3 run_training.py \
+--wrapper_type mlm \
+--train_examples 100 \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type roberta \
+--model_name_or_path roberta-base \
+--task_name yelp-full \
+--output_dir ./output_roberta_test/yelp \
+--do_train \
+--do_eval \
+--pattern_ids 0 1 2 3 \
+--lm_train_examples_per_label 10000 \
+--gradient_accumulation_steps 4 \
+--max_steps 250  \
+--max_seq_length 256 \
+--save_train_logits
+
+
+
+
+
+Combining PVPs:
+(1) python3 merge_logits.py --logits_dir ./output_roberta_test/yelp --output_file LOGITS_FILE --reduction mean
+(2) python3 merge_logits.py --logits_dir ./output_roberta_test/yelp --output_file LOGITS_FILE --reduction mean --overwrite_output_file
+
+
+Training the Final Model:
+(bert)
+python3 run_training.py \
+--wrapper_type sequence_classifier \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type bert \
+--model_name_or_path bert-base-uncased \
+--task_name yelp-full \
+--output_dir ./output_final/yelp \
+--do_train \
+--do_eval \
+--max_steps 5000 \
+--train_examples 1 \
+--lm_train_examples_per_label 10000 \
+--temperature 2 \
+--logits_file LOGITS_FILE
+
+
+(roberta)
+python3 run_training.py \
+--wrapper_type sequence_classifier \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--model_type roberta \
+--model_name_or_path roberta-base \
+--task_name yelp-full \
+--output_dir ./output_final_roberta_test/yelp \
+--do_train \
+--do_eval \
+--max_steps 5000 \
+--train_examples 1 \
+--lm_train_examples_per_label 10000 \
+--temperature 2 \
+--logits_file LOGITS_FILE
+
+
+
+
+
+
+
+Test:
+python test.py \
+--wrapper_type mlm \
+--model_name_or_path roberta-base \
+--data_dir ./text_classification_datasets/yelp_review_full_csv \
+--task_name yelp-full \
+--model_type roberta \
+--max_seq_length 256 \
+--lm_train_examples_per_label 10000 \
+--train_examples 100 \
+--pattern_ids 0 1 2 3
+
+
+
+
+
+
+
+
+
+InputFeatures(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids,
+                             label=label, mlm_labels=mlm_labels, logits=logits)
+0:input_ids, 1:attention_mask, 2:token_type_ids, 3:label, 4:mlm_labels, 5: logits 
+
+
+(train_dataloader) Batch 1:
+  0: tensor([[  101,   100,  2001,   103,  1012,   100,  1010,  2061, 11504,  2017,
+          4033,  1005,  1056,  2042,  9107,  3407,  3178,  1030,   100,  1005,
+          1055,   100,   100,  2077,  2017,  3191,  2023,  2030,  2017,  2453,
+          2025,  2022,  2583,  2000,  3582,  1996, 13451,  3436,   100,  5608,
+          1012,   100, 28667,  9331,  1024,   100,  1005,  1055,   100,   100,
+          2013,  3245,  1011,  3106,  1012,   100,  1005,  1055,   100,   100,
+          2013,  2786,  1011,  2526,  1012,   100,  1005,  1055,   100,   100,
+          2013,  2526,  1011,  2262,  1012,   100,  1010,  4524, 24548,  3531,
+          1010,   100,  1005,  1055,   100,   100,  7480,   100,  1015,  1997,
+          2262,  1012,   100,  2007,  2033,  1029,   100,  1005,  1055,  1037,
+          4714,  2146,  3347,  2074,  2066,  1996,  2214,   100, 23598,  1012,
+           100,  2062,  9422,  3039,  1012,   100,   999,   999,   999,   100,
+         10223,  6508,  2326,  1012,   100,  3984,  2003,  2008,  1996,  2972,
+          2173,  3791,  1006,  2053,  1010,  4894,  2008,  1012,  1012,  1012,
+          1012,  7670,  1007,  2019, 12978,  2833,  1013, 19645,  7281,  2075,
+          2291,  1012,   100,  1997,  1996, 26929,  1010, 15812,  2015,  1010,
+          2030, 13877,  2229,  2113,  2040,  3641,  2054,  4496,  2054,  7281,
+          7460,  2000,  2029,  2795,  1012,   100,  1005,  1055,  2941,  3492,
+          6057,  2065,  2017,  1005,  2128,  2025,  1037,  1007,  7501,  2030,
+          1038,  1007, 24907,  1012,   100,  2428,  2428,  2215,  2023,  2173,
+          2000,  2079,  2488,  1012,   100,  2342,  2062,   100, 23598,  1998,
+          2334,  2214,  2051, 25813,  8198,  1012,   100,  2009,  2362,  1010,
+           100,  1005,  1055,  1012,  1012,  1012,  9413,  1010,   100,  2812,
+           100,  1005,  1055,  1012,  1012,  1012,  1012,  9413,  1010,   100,
+          2812,   100,  1005,  1055,  2030,  2003,  2009,   100,  1005,  1055,
+          1029,  1025,  1007,  1012,   100,   102]])
+  1: tensor([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]])
+  2: tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
+  3: tensor([1])
+  4: tensor([[-1, -1, -1,  1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+         -1, -1, -1, -1]])
+  5: tensor([[-1.]])
+
+
+
+iPET:
+  ./ipet.sh yelp-full ./text_classification_datasets/yelp_review_full_csv ./output_roberta/yelp 100
+
+  (Train a regular PET model as described in the previous section.
+  You only need to run the first step ("Training Individual PVP Models").)
+  yelp-full: 
+  PET(FacebookAI/roberta-base)
+  python3 run_training.py \
+  --wrapper_type mlm \
+  --train_examples 100 \
+  --data_dir ./text_classification_datasets/yelp_review_full_csv \
+  --model_type roberta \
+  --model_name_or_path roberta-base \
+  --task_name yelp-full \
+  --output_dir ./output_roberta_test_iPET_100 \
+  --do_train \
+  --do_eval \
+  --pattern_ids 0 1 2 3 \
+  --lm_train_examples_per_label 10000 \
+  --gradient_accumulation_steps 4 \
+  --max_steps 250  \
+  --max_seq_length 256 \
+  --save_train_logits
+
+
+
+
+  test: 
+  ./ipet.sh yelp-full ./text_classification_datasets/yelp_review_full_csv ./output_roberta_test_iPET_100/yelp 100
