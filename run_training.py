@@ -264,7 +264,7 @@ def main():
                 wrapper.model.to(device)
 
 
-                # results_dict['train_set_before_training'] = wrapper.eval(train_data, device, **vars(args))['acc']
+                results_dict['train_set_before_training'] = wrapper.eval(train_data, device, **vars(args))['acc']
 
                 pattern_iter_train_data = []
                 pattern_iter_train_data.extend(train_data) # len(task_train_data): 100
