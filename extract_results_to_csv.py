@@ -5,7 +5,7 @@ import ast
 
 
 
-def extract_results_to_csv(root_dir, output_file):
+def extract_results_to_csv(root_dir, output_file, header_written):
     results = []
     print(f'root_dir: {root_dir}')
     for folder in os.listdir(root_dir):
@@ -41,7 +41,9 @@ def extract_results_to_csv(root_dir, output_file):
 
     with open(output_file, "a", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow(["output_folder", "train_set_before_training", "train_set_after_training", "test_set_after_training"])
+        if not header_written:
+            writer.writerow(["output_folder", "train_set_before_training", "train_set_after_training", "test_set_after_training"])
+        
         writer.writerows(results)
 
     print(f"Results exported to {output_file}")
@@ -49,8 +51,10 @@ def extract_results_to_csv(root_dir, output_file):
 def main():
     root_dir = ["./output_supervised_roberta_50", "./output_supervised_roberta_100", "./output_supervised_1000", "./output_supervised_roberta_10000", "./output_roberta_iPET_100"]
     output_file = "results.csv"
+    header_written = False  # 標記列名是否已經寫入
     for r_dir in root_dir:
-        extract_results_to_csv(r_dir, output_file)
+        extract_results_to_csv(r_dir, output_file, header_written)
+        header_written = True
 
 
 

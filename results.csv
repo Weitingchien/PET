@@ -2,16 +2,12 @@ output_folder,train_set_before_training,train_set_after_training,test_set_after_
 ./output_supervised_roberta_50/yelp/p0-i2,0.2,0.2,0.2
 ./output_supervised_roberta_50/yelp/p0-i1,0.2,0.2,0.2
 ./output_supervised_roberta_50/yelp/p0-i0,0.18,0.26,0.20074
-output_folder,train_set_before_training,train_set_after_training,test_set_after_training
 ./output_supervised_roberta_100/yelp/p0-i2,0.2,0.2,0.20152
 ./output_supervised_roberta_100/yelp/p0-i1,0.16,0.2,0.20002
 ./output_supervised_roberta_100/yelp/p0-i0,0.18,0.44,0.29378
-output_folder,train_set_before_training,train_set_after_training,test_set_after_training
-output_folder,train_set_before_training,train_set_after_training,test_set_after_training
 ./output_supervised_roberta_10000/yelp/p0-i2,0.1988,0.8304,0.63886
 ./output_supervised_roberta_10000/yelp/p0-i1,0.2,0.8277,0.63486
 ./output_supervised_roberta_10000/yelp/p0-i0,0.1677,0.8335,0.63724
-output_folder,train_set_before_training,train_set_after_training,test_set_after_training
 ./output_roberta_iPET_100/yelp/p2-i2,0.25,1.0,0.5491
 ./output_roberta_iPET_100/yelp/p3-i0,0.31,1.0,0.54176
 ./output_roberta_iPET_100/yelp/p3-i2,0.31,1.0,0.54302
