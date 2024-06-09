@@ -38,7 +38,9 @@ def extract_results_to_csv(root_dir, output_file, header_written):
                                             print(f'results: {results}')
                                         except (SyntaxError, ValueError):
                                             print(f"Invalid content in {pi_path}")
-
+    # 對results列表進行排序
+    results.sort(key=lambda x: x[0])
+    
     with open(output_file, "a", newline="") as file:
         writer = csv.writer(file)
         if not header_written:

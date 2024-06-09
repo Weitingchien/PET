@@ -9,7 +9,7 @@ def main():
     folders = [
         "./output_supervised_roberta_50/yelp",
         "./output_supervised_roberta_10000/yelp",
-        "./output_supervised_1000/yelp",
+        "./output_supervised_roberta_1000/yelp",
         "./output_supervised_roberta_100/yelp",
         "./output_final_roberta/yelp",
         "./output_roberta_iPET_100/yelp-i2-distilled"
