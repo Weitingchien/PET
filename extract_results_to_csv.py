@@ -51,7 +51,7 @@ def extract_results_to_csv(root_dir, output_file, header_written):
     print(f"Results exported to {output_file}")
 
 def main():
-    root_dir = ["./output_supervised_roberta_50", "./output_supervised_roberta_100", "./output_supervised_1000", "./output_supervised_roberta_10000", "./output_roberta_iPET_100"]
+    root_dir = ["./output_supervised_roberta_50", "./output_supervised_roberta_100", "./output_supervised_roberta_1000", "./output_supervised_roberta_10000", "./output_roberta_iPET_100"]
     output_file = "results.csv"
     header_written = False  # 標記列名是否已經寫入
     for r_dir in root_dir:
