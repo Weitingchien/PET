@@ -1,0 +1,56 @@
+Dataset: train
+fear: 8612 samples
+shame: 696 samples
+sadness: 6703 samples
+anger: 2133 samples
+love: 2320 samples
+
+Dataset: unseen
+joy: 11166 samples
+guilt: 693 samples
+disgust: 848 samples
+surprise: 1496 samples
+
+Dataset: dev
+fear: 1600 samples
+joy: 1600 samples
+sadness: 1300 samples
+shame: 100 samples
+guilt: 100 samples
+disgust: 300 samples
+anger: 800 samples
+noemo: 1000 samples
+surprise: 500 samples
+love: 400 samples
+
+Dataset: test
+sadness: 2300 samples
+joy: 3000 samples
+fear: 2700 samples
+anger: 2500 samples
+disgust: 600 samples
+shame: 300 samples
+guilt: 300 samples
+noemo: 2000 samples
+surprise: 1200 samples
+love: 1100 samples
+
+Dataset: (unseen)test
+joy: 3000 samples
+disgust: 600 samples
+guilt: 300 samples
+surprise: 1200 samples
+
+Dataset: dev_v0
+fear: 1600 samples
+sadness: 1300 samples
+shame: 100 samples
+anger: 800 samples
+love: 400 samples
+
+Dataset: dev_v1
+joy: 1600 samples
+guilt: 100 samples
+disgust: 300 samples
+surprise: 500 samples
+

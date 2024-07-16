@@ -196,6 +196,7 @@ class TransformerModelWrapper:
         print(f'(train) lm_training: {lm_training}')
         print(f'(train) use_logits: {use_logits}') # (train) use_logits: False
 
+
         data_dict = {}
 
         print(f'len(task_train_data): {len(task_train_data)}')
@@ -297,10 +298,12 @@ class TransformerModelWrapper:
                 print(f'inputs: {inputs}')
                 # **inputs: 參數解包
                 outputs = self.model(**inputs) # outputs[0].shape: torch.Size([4, 256, 50265])
-                """
+                # print(f'outputs[1]: {outputs[1]}')
+                # print(f'outputs[0]: {outputs[0]}')
+                
                 for i, output in enumerate(outputs):
                     print(f'outputs[{i}].shape: {output.shape}')
-                """
+                
 
 
 
@@ -321,9 +324,10 @@ class TransformerModelWrapper:
                     for _ in range(4):
                         print("Training for sequence classification task")
                     loss = outputs[0]
-                    """
-                    print(f"Loss value: {loss}")
-                    """
+                    for i in range(5):
+                    
+                        print(f"Loss value: {loss}")
+                    
                 else:
                     for _ in range(4):
                         print("Training for MLM task")
@@ -331,20 +335,23 @@ class TransformerModelWrapper:
                     
 
                     mlm_labels = batch[4].to(device)
-                    print(f'(train)mlm_labels: {mlm_labels}, shape: {mlm_labels.shape}')
+                    # print(f'(train)mlm_labels: {mlm_labels}, shape: {mlm_labels.shape}')
                     # 用於將 MLM 的預測分數轉換為分類任務的預測分數(利用 MLM 任務學習到的知識來執行分類任務)
                     prediction_scores, predicted_words = self.preprocessor.pvp.convert_mlm_logits_to_cls_logits(mlm_labels,
                                                                                                outputs[0], data_dict, iteration)
-                    print(f'prediction_scores.shape:  {prediction_scores.shape}')  # torch.Size([4, 5])
+                    # print(f'prediction_scores.shape:  {prediction_scores.shape}')  # torch.Size([4, 5])
                     input_ids = batch[0] 
                     decoded_inputs = [self.tokenizer.decode(ids) for ids in input_ids]
                     # print(f'(train) decoded_inputs: {decoded_inputs} ')
                     labels = batch[3].to(device) #真實標籤
                     print(f'(train)prediction_scores: {prediction_scores} predicted_words: {predicted_words} decoded_inputs: {decoded_inputs} labels: {labels}')
                     loss_fct = nn.CrossEntropyLoss()
-                    print(f'prediction_scores: {prediction_scores}')
-                    print(f'prediction_scores.view(): {prediction_scores.view(-1, len(self.config.label_list))} labels.view(-1):{labels.view(-1)}')
+                    for i in range(0, 10):
+                        print(f'prediction_scores: {prediction_scores}')
+                        print(f'prediction_scores.view(): {prediction_scores.view(-1, len(self.config.label_list))} labels.view(-1):{labels.view(-1)}')
                     loss = loss_fct(prediction_scores.view(-1, len(self.config.label_list)), labels.view(-1))
+                    for i in range(0, 10):
+                         print(f'loss: {loss}')
                     """
                     print(f"MLM logits shape: {outputs[0].shape}")
                     print(f"Prediction scores shape: {prediction_scores.shape}")
@@ -352,6 +359,8 @@ class TransformerModelWrapper:
                     """
 
                 if lm_training:
+                    for i in range(5):
+                        print(f'lm_training')
                     lm_inputs = {
                         'input_ids': helper_batch[0], 'attention_mask': helper_batch[1],
                         'masked_lm_labels': helper_batch[4],

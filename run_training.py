@@ -15,6 +15,7 @@ This script can be used to train and evaluate either a regular supervised model 
 one of the supported tasks and datasets.
 """
 import os
+import time
 import csv
 import log
 import torch
@@ -130,6 +131,8 @@ def main():
 
     # Setup CUDA, GPU & distributed training
     device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
+    for i in range(10):
+        print(f'device: {device}')
     args.n_gpu = torch.cuda.device_count()
     set_seed(args)
 
@@ -248,6 +251,8 @@ def main():
             print("---")
         """
 
+    total_train_time = 0
+    total_eval_time = 0
 
     for pattern_id in args.pattern_ids:
         args.pattern_id = pattern_id
@@ -300,6 +305,7 @@ def main():
         
 
                 logger.info("Starting training...")
+                start_time = time.time()
 
                 data_dict, global_step, tr_loss = wrapper.train(
                     pattern_iter_train_data, device, iteration, 
@@ -307,17 +313,24 @@ def main():
                     tmp_dir=output_dir, **vars(args))
 
 
+                train_time = time.time() - start_time
+                total_train_time += train_time
+                train_minutes, train_seconds = divmod(train_time, 60)
+                logger.info(f"Training time for pattern {pattern_id}, iteration {iteration}: {train_minutes:.0f}m {train_seconds:.0f}s")
+
+
                 # 在這裡創建訓練數據的映射CSV文件
-                
+                """
                 for folder, values in data_dict.items():
                     print(f'folder: {folder}, values: {values}')
                     # create_mapping_csv(values['logits'], values['m2c'], wrapper.tokenizer, output_dir, 'mapping_train.csv')
-                
+                """
 
                 logger.info(" global_step = %s, average loss = %s", global_step, tr_loss)
                 logger.info("Training complete")
-            
+    
                 results_dict['train_set_after_training'] = wrapper.eval(train_data, device, **vars(args))['acc']
+
 
                 with open(os.path.join(output_dir, 'results.txt'), 'w') as fh:
                     fh.write(str(results_dict))
@@ -344,11 +357,23 @@ def main():
                     wrapper = TransformerModelWrapper.from_pretrained(output_dir)
                     wrapper.model.to(device)
 
+                start_time = time.time()
+
                 result = wrapper.eval(eval_data, device, **vars(args))
+
+                eval_time = time.time() - start_time
+                total_eval_time += eval_time
+                eval_minutes, eval_seconds = divmod(eval_time, 60)
+                logger.info(f"Evaluation time for pattern {pattern_id}, iteration {iteration}: {eval_minutes:.0f}m {eval_seconds:.0f}s")
+
+
+
                 logger.info(f"--- RESULT (pattern_id={pattern_id}, iteration={iteration}) ---")
                 logger.info(result)
 
                 results_dict['test_set_after_training'] = result['acc']
+
+
                 with open(os.path.join(output_dir, 'results.txt'), 'w') as fh:
                     fh.write(str(results_dict))
 
@@ -357,6 +382,23 @@ def main():
 
                 wrapper.model = None
                 torch.cuda.empty_cache()
+
+
+    # 計算平均訓練時間和評估時間
+    avg_train_time = total_train_time / (len(args.pattern_ids) * args.repetitions)
+    avg_eval_time = total_eval_time / (len(args.pattern_ids) * args.repetitions)
+
+    avg_train_minutes, avg_train_seconds = divmod(avg_train_time, 60)
+    avg_eval_minutes, avg_eval_seconds = divmod(avg_eval_time, 60)
+
+    logger.info(f"Average training time: {avg_train_minutes:.0f}m {avg_train_seconds:.0f}s")
+    logger.info(f"Average evaluation time: {avg_eval_minutes:.0f}m {avg_eval_seconds:.0f}s")
+
+
+    # 將平均訓練時間和評估時間寫入檔案
+    with open(os.path.join(args.output_dir, "exp_runtime_logs.txt"), "w") as f:
+        f.write(f"Average training time: {avg_train_minutes:.0f}m {avg_train_seconds:.0f}s\n")
+        f.write(f"Average evaluation time: {avg_eval_minutes:.0f}m {avg_eval_seconds:.0f}s\n")
 
     logger.info("=== OVERALL RESULTS ===")
 

@@ -12,3 +12,6 @@ output
 __pycache__
 output*/
 LOGITS_FILE
+BERT_self_training_*/
+datasets
+best_model.pt

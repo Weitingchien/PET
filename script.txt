@@ -141,7 +141,7 @@ python3 run_training.py \
 results without auxiliary language modeling: 
 
 yelp-full: 
-PET(FacebookAI/roberta-base)
+PET + Auxiliary Language Modeling(FacebookAI/roberta-base)
 python3 run_training.py \
 --wrapper_type mlm \
 --train_examples 100 \

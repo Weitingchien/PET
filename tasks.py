@@ -251,18 +251,16 @@ class YelpPolarityProcessor(DataProcessor):
     def _create_examples(self, path, set_type, max_examples=-1, skip_first=0):
         """Creates examples for the training and dev sets."""
         examples = LimitedExampleList(self.get_labels(), max_examples, skip_first)
-    
 
         with open(path) as f:
             reader = csv.reader(f, delimiter=',')
             for idx, row in enumerate(reader):
                 label, body = row
                 guid = "%s-%s" % (set_type, idx)
-                text_a = body.replace('\\n', ' ').replace('\\', ' ') # 將body字符串中的\n(換行符)替換為空格, 將body字符串中的\(反斜線)替換為空格
-                
+                text_a = body.replace('\\n', ' ').replace('\\', ' ')
+
                 example = InputExample(guid=guid, text_a=text_a, label=label)
                 examples.add(example)
-                # 如果當前類別還沒有達到最大樣本數,樣本會被添加;否則,它會被忽略
                 if examples.is_full():
                     break
 
