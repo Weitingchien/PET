@@ -1,288 +1,336 @@
+BERT_self_training_0.1 - dev_v0_pred.txt:
+Total Samples: 4200
+Accuracy: 60.67%
+Macro F1 Score: 64.28%
+Class-wise performance:
+  disgust: TP=0, FP=11, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  anger: TP=590, FP=86, FN=210, Total=800, Precision=87.28%, Recall=73.75%, F1=79.95%
+  love: TP=137, FP=7, FN=263, Total=400, Precision=95.14%, Recall=34.25%, F1=50.37%
+  sadness: TP=885, FP=735, FN=415, Total=1300, Precision=54.63%, Recall=68.08%, F1=60.62%
+  shame: TP=61, FP=11, FN=39, Total=100, Precision=84.72%, Recall=61.00%, F1=70.93%
+  surprise: TP=0, FP=56, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  guilt: TP=0, FP=28, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  joy: TP=0, FP=184, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  noemo: TP=0, FP=70, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=875, FP=464, FN=725, Total=1600, Precision=65.35%, Recall=54.69%, F1=59.54%
+
+BERT_self_training_0.1 - dev_pred.txt:
+Total Samples: 7700
+Accuracy: 38.17%
+Macro F1 Score: 32.85%
+Class-wise performance:
+  disgust: TP=18, FP=32, FN=282, Total=300, Precision=36.00%, Recall=6.00%, F1=10.29%
+  anger: TP=590, FP=397, FN=210, Total=800, Precision=59.78%, Recall=73.75%, F1=66.03%
+  love: TP=137, FP=69, FN=263, Total=400, Precision=66.50%, Recall=34.25%, F1=45.21%
+  sadness: TP=885, FP=1911, FN=415, Total=1300, Precision=31.65%, Recall=68.08%, F1=43.21%
+  shame: TP=61, FP=87, FN=39, Total=100, Precision=41.22%, Recall=61.00%, F1=49.19%
+  surprise: TP=43, FP=189, FN=457, Total=500, Precision=18.53%, Recall=8.60%, F1=11.75%
+  guilt: TP=25, FP=46, FN=75, Total=100, Precision=35.21%, Recall=25.00%, F1=29.24%
+  joy: TP=273, FP=280, FN=1327, Total=1600, Precision=49.37%, Recall=17.06%, F1=25.36%
+  noemo: TP=32, FP=133, FN=968, Total=1000, Precision=19.39%, Recall=3.20%, F1=5.49%
+  fear: TP=875, FP=1617, FN=725, Total=1600, Precision=35.11%, Recall=54.69%, F1=42.77%
+
+BERT_self_training_0.1 - test_pred.txt:
+Total Samples: 5100
+Accuracy: 13.55%
+Macro F1 Score: 28.00%
+Class-wise performance:
+  disgust: TP=146, FP=56, FN=454, Total=600, Precision=72.28%, Recall=24.33%, F1=36.41%
+  anger: TP=0, FP=228, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  love: TP=0, FP=116, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  sadness: TP=0, FP=1169, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  shame: TP=0, FP=154, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  surprise: TP=87, FP=162, FN=1113, Total=1200, Precision=34.94%, Recall=7.25%, F1=12.01%
+  guilt: TP=116, FP=120, FN=184, Total=300, Precision=49.15%, Recall=38.67%, F1=43.28%
+  joy: TP=342, FP=25, FN=2658, Total=3000, Precision=93.19%, Recall=11.40%, F1=20.31%
+  noemo: TP=0, FP=80, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=0, FP=2299, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+
 BERT_self_training_0.2 - dev_v0_pred.txt:
 Total Samples: 4200
 Accuracy: 57.90%
-Macro F1 Score: 32.70%
+Macro F1 Score: 65.40%
 Class-wise performance:
-  anger: TP=584, FP=93, FN=216, Total=800, Precision=86.26%, Recall=73.00%, F1=79.08%
-  guilt: TP=0, FP=9, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  love: TP=167, FP=19, FN=233, Total=400, Precision=89.78%, Recall=41.75%, F1=57.00%
-  noemo: TP=0, FP=252, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=0, FP=129, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  shame: TP=77, FP=30, FN=23, Total=100, Precision=71.96%, Recall=77.00%, F1=74.40%
-  fear: TP=849, FP=458, FN=751, Total=1600, Precision=64.96%, Recall=53.06%, F1=58.41%
-  joy: TP=0, FP=222, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=0, FP=12, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  anger: TP=584, FP=93, FN=216, Total=800, Precision=86.26%, Recall=73.00%, F1=79.08%
+  love: TP=167, FP=19, FN=233, Total=400, Precision=89.78%, Recall=41.75%, F1=57.00%
   sadness: TP=755, FP=544, FN=545, Total=1300, Precision=58.12%, Recall=58.08%, F1=58.10%
+  shame: TP=77, FP=30, FN=23, Total=100, Precision=71.96%, Recall=77.00%, F1=74.40%
+  surprise: TP=0, FP=129, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  guilt: TP=0, FP=9, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  joy: TP=0, FP=222, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  noemo: TP=0, FP=252, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=849, FP=458, FN=751, Total=1600, Precision=64.96%, Recall=53.06%, F1=58.41%
 
 BERT_self_training_0.2 - dev_pred.txt:
 Total Samples: 7700
 Accuracy: 37.78%
 Macro F1 Score: 32.06%
 Class-wise performance:
-  anger: TP=584, FP=422, FN=216, Total=800, Precision=58.05%, Recall=73.00%, F1=64.67%
-  guilt: TP=12, FP=17, FN=88, Total=100, Precision=41.38%, Recall=12.00%, F1=18.60%
-  love: TP=167, FP=160, FN=233, Total=400, Precision=51.07%, Recall=41.75%, F1=45.94%
-  noemo: TP=82, FP=401, FN=918, Total=1000, Precision=16.98%, Recall=8.20%, F1=11.06%
-  surprise: TP=60, FP=381, FN=440, Total=500, Precision=13.61%, Recall=12.00%, F1=12.75%
-  shame: TP=77, FP=155, FN=23, Total=100, Precision=33.19%, Recall=77.00%, F1=46.39%
-  fear: TP=849, FP=1538, FN=751, Total=1600, Precision=35.57%, Recall=53.06%, F1=42.59%
-  joy: TP=312, FP=343, FN=1288, Total=1600, Precision=47.63%, Recall=19.50%, F1=27.67%
   disgust: TP=11, FP=24, FN=289, Total=300, Precision=31.43%, Recall=3.67%, F1=6.57%
+  anger: TP=584, FP=422, FN=216, Total=800, Precision=58.05%, Recall=73.00%, F1=64.67%
+  love: TP=167, FP=160, FN=233, Total=400, Precision=51.07%, Recall=41.75%, F1=45.94%
   sadness: TP=755, FP=1350, FN=545, Total=1300, Precision=35.87%, Recall=58.08%, F1=44.35%
+  shame: TP=77, FP=155, FN=23, Total=100, Precision=33.19%, Recall=77.00%, F1=46.39%
+  surprise: TP=60, FP=381, FN=440, Total=500, Precision=13.61%, Recall=12.00%, F1=12.75%
+  guilt: TP=12, FP=17, FN=88, Total=100, Precision=41.38%, Recall=12.00%, F1=18.60%
+  joy: TP=312, FP=343, FN=1288, Total=1600, Precision=47.63%, Recall=19.50%, F1=27.67%
+  noemo: TP=82, FP=401, FN=918, Total=1000, Precision=16.98%, Recall=8.20%, F1=11.06%
+  fear: TP=849, FP=1538, FN=751, Total=1600, Precision=35.57%, Recall=53.06%, F1=42.59%
 
 BERT_self_training_0.2 - test_pred.txt:
 Total Samples: 5100
 Accuracy: 14.88%
-Macro F1 Score: 9.35%
+Macro F1 Score: 23.38%
 Class-wise performance:
-  anger: TP=0, FP=306, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  guilt: TP=50, FP=49, FN=250, Total=300, Precision=50.51%, Recall=16.67%, F1=25.06%
-  love: TP=0, FP=228, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  noemo: TP=0, FP=189, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=110, FP=242, FN=1090, Total=1200, Precision=31.25%, Recall=9.17%, F1=14.18%
-  shame: TP=0, FP=242, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  joy: TP=508, FP=62, FN=2492, Total=3000, Precision=89.12%, Recall=16.93%, F1=28.46%
-  fear: TP=0, FP=2341, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=91, FP=14, FN=509, Total=600, Precision=86.67%, Recall=15.17%, F1=25.82%
+  anger: TP=0, FP=306, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  love: TP=0, FP=228, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   sadness: TP=0, FP=668, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  shame: TP=0, FP=242, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  surprise: TP=110, FP=242, FN=1090, Total=1200, Precision=31.25%, Recall=9.17%, F1=14.18%
+  guilt: TP=50, FP=49, FN=250, Total=300, Precision=50.51%, Recall=16.67%, F1=25.06%
+  joy: TP=508, FP=62, FN=2492, Total=3000, Precision=89.12%, Recall=16.93%, F1=28.46%
+  noemo: TP=0, FP=189, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=0, FP=2341, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
 
 BERT_self_training_0.2_balance_label - dev_v0_pred.txt:
 Total Samples: 4200
 Accuracy: 56.38%
-Macro F1 Score: 30.80%
+Macro F1 Score: 61.59%
 Class-wise performance:
-  anger: TP=581, FP=149, FN=219, Total=800, Precision=79.59%, Recall=72.62%, F1=75.95%
-  guilt: TP=0, FP=13, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  love: TP=276, FP=96, FN=124, Total=400, Precision=74.19%, Recall=69.00%, F1=71.50%
-  noemo: TP=0, FP=223, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=0, FP=84, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  shame: TP=95, FP=157, FN=5, Total=100, Precision=37.70%, Recall=95.00%, F1=53.98%
-  fear: TP=632, FP=298, FN=968, Total=1600, Precision=67.96%, Recall=39.50%, F1=49.96%
-  joy: TP=0, FP=98, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=0, FP=27, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  anger: TP=581, FP=149, FN=219, Total=800, Precision=79.59%, Recall=72.62%, F1=75.95%
+  love: TP=276, FP=96, FN=124, Total=400, Precision=74.19%, Recall=69.00%, F1=71.50%
   sadness: TP=784, FP=687, FN=516, Total=1300, Precision=53.30%, Recall=60.31%, F1=56.59%
+  shame: TP=95, FP=157, FN=5, Total=100, Precision=37.70%, Recall=95.00%, F1=53.98%
+  surprise: TP=0, FP=84, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  guilt: TP=0, FP=13, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  joy: TP=0, FP=98, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  noemo: TP=0, FP=223, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=632, FP=298, FN=968, Total=1600, Precision=67.96%, Recall=39.50%, F1=49.96%
 
 BERT_self_training_0.2_balance_label - dev_pred.txt:
 Total Samples: 7700
 Accuracy: 35.32%
 Macro F1 Score: 27.56%
 Class-wise performance:
-  anger: TP=581, FP=576, FN=219, Total=800, Precision=50.22%, Recall=72.62%, F1=59.38%
-  guilt: TP=4, FP=20, FN=96, Total=100, Precision=16.67%, Recall=4.00%, F1=6.45%
-  love: TP=276, FP=479, FN=124, Total=400, Precision=36.56%, Recall=69.00%, F1=47.79%
-  noemo: TP=74, FP=395, FN=926, Total=1000, Precision=15.78%, Recall=7.40%, F1=10.07%
-  surprise: TP=38, FP=221, FN=462, Total=500, Precision=14.67%, Recall=7.60%, F1=10.01%
-  shame: TP=95, FP=465, FN=5, Total=100, Precision=16.96%, Recall=95.00%, F1=28.79%
-  fear: TP=632, FP=941, FN=968, Total=1600, Precision=40.18%, Recall=39.50%, F1=39.84%
-  joy: TP=218, FP=200, FN=1382, Total=1600, Precision=52.15%, Recall=13.63%, F1=21.61%
   disgust: TP=18, FP=69, FN=282, Total=300, Precision=20.69%, Recall=6.00%, F1=9.30%
+  anger: TP=581, FP=576, FN=219, Total=800, Precision=50.22%, Recall=72.62%, F1=59.38%
+  love: TP=276, FP=479, FN=124, Total=400, Precision=36.56%, Recall=69.00%, F1=47.79%
   sadness: TP=784, FP=1614, FN=516, Total=1300, Precision=32.69%, Recall=60.31%, F1=42.40%
+  shame: TP=95, FP=465, FN=5, Total=100, Precision=16.96%, Recall=95.00%, F1=28.79%
+  surprise: TP=38, FP=221, FN=462, Total=500, Precision=14.67%, Recall=7.60%, F1=10.01%
+  guilt: TP=4, FP=20, FN=96, Total=100, Precision=16.67%, Recall=4.00%, F1=6.45%
+  joy: TP=218, FP=200, FN=1382, Total=1600, Precision=52.15%, Recall=13.63%, F1=21.61%
+  noemo: TP=74, FP=395, FN=926, Total=1000, Precision=15.78%, Recall=7.40%, F1=10.07%
+  fear: TP=632, FP=941, FN=968, Total=1600, Precision=40.18%, Recall=39.50%, F1=39.84%
 
 BERT_self_training_0.2_balance_label - test_pred.txt:
 Total Samples: 5100
 Accuracy: 25.61%
-Macro F1 Score: 11.89%
+Macro F1 Score: 29.73%
 Class-wise performance:
-  anger: TP=0, FP=792, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  guilt: TP=44, FP=13, FN=256, Total=300, Precision=77.19%, Recall=14.67%, F1=24.65%
-  love: TP=0, FP=319, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  noemo: TP=0, FP=167, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=107, FP=83, FN=1093, Total=1200, Precision=56.32%, Recall=8.92%, F1=15.40%
-  shame: TP=0, FP=528, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  joy: TP=1041, FP=280, FN=1959, Total=3000, Precision=78.80%, Recall=34.70%, F1=48.18%
-  fear: TP=0, FP=908, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=114, FP=29, FN=486, Total=600, Precision=79.72%, Recall=19.00%, F1=30.69%
+  anger: TP=0, FP=792, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  love: TP=0, FP=319, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   sadness: TP=0, FP=675, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  shame: TP=0, FP=528, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  surprise: TP=107, FP=83, FN=1093, Total=1200, Precision=56.32%, Recall=8.92%, F1=15.40%
+  guilt: TP=44, FP=13, FN=256, Total=300, Precision=77.19%, Recall=14.67%, F1=24.65%
+  joy: TP=1041, FP=280, FN=1959, Total=3000, Precision=78.80%, Recall=34.70%, F1=48.18%
+  noemo: TP=0, FP=167, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=0, FP=908, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
 
 BERT_self_training_0.4 - dev_v0_pred.txt:
 Total Samples: 4200
 Accuracy: 60.33%
-Macro F1 Score: 31.90%
+Macro F1 Score: 63.81%
 Class-wise performance:
-  anger: TP=613, FP=126, FN=187, Total=800, Precision=82.95%, Recall=76.62%, F1=79.66%
-  guilt: TP=0, FP=30, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  love: TP=147, FP=11, FN=253, Total=400, Precision=93.04%, Recall=36.75%, F1=52.69%
-  noemo: TP=0, FP=107, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=0, FP=85, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  shame: TP=75, FP=43, FN=25, Total=100, Precision=63.56%, Recall=75.00%, F1=68.81%
-  fear: TP=963, FP=584, FN=637, Total=1600, Precision=62.25%, Recall=60.19%, F1=61.20%
-  joy: TP=0, FP=113, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=0, FP=6, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  anger: TP=613, FP=126, FN=187, Total=800, Precision=82.95%, Recall=76.62%, F1=79.66%
+  love: TP=147, FP=11, FN=253, Total=400, Precision=93.04%, Recall=36.75%, F1=52.69%
   sadness: TP=736, FP=561, FN=564, Total=1300, Precision=56.75%, Recall=56.62%, F1=56.68%
+  shame: TP=75, FP=43, FN=25, Total=100, Precision=63.56%, Recall=75.00%, F1=68.81%
+  surprise: TP=0, FP=85, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  guilt: TP=0, FP=30, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  joy: TP=0, FP=113, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  noemo: TP=0, FP=107, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=963, FP=584, FN=637, Total=1600, Precision=62.25%, Recall=60.19%, F1=61.20%
 
 BERT_self_training_0.4 - dev_pred.txt:
 Total Samples: 7700
 Accuracy: 36.32%
 Macro F1 Score: 28.24%
 Class-wise performance:
-  anger: TP=613, FP=567, FN=187, Total=800, Precision=51.95%, Recall=76.62%, F1=61.92%
-  guilt: TP=9, FP=91, FN=91, Total=100, Precision=9.00%, Recall=9.00%, F1=9.00%
-  love: TP=147, FP=104, FN=253, Total=400, Precision=58.57%, Recall=36.75%, F1=45.16%
-  noemo: TP=44, FP=197, FN=956, Total=1000, Precision=18.26%, Recall=4.40%, F1=7.09%
-  surprise: TP=46, FP=263, FN=454, Total=500, Precision=14.89%, Recall=9.20%, F1=11.37%
-  shame: TP=75, FP=174, FN=25, Total=100, Precision=30.12%, Recall=75.00%, F1=42.98%
-  fear: TP=963, FP=1893, FN=637, Total=1600, Precision=33.72%, Recall=60.19%, F1=43.22%
-  joy: TP=160, FP=180, FN=1440, Total=1600, Precision=47.06%, Recall=10.00%, F1=16.49%
   disgust: TP=4, FP=21, FN=296, Total=300, Precision=16.00%, Recall=1.33%, F1=2.46%
+  anger: TP=613, FP=567, FN=187, Total=800, Precision=51.95%, Recall=76.62%, F1=61.92%
+  love: TP=147, FP=104, FN=253, Total=400, Precision=58.57%, Recall=36.75%, F1=45.16%
   sadness: TP=736, FP=1413, FN=564, Total=1300, Precision=34.25%, Recall=56.62%, F1=42.68%
+  shame: TP=75, FP=174, FN=25, Total=100, Precision=30.12%, Recall=75.00%, F1=42.98%
+  surprise: TP=46, FP=263, FN=454, Total=500, Precision=14.89%, Recall=9.20%, F1=11.37%
+  guilt: TP=9, FP=91, FN=91, Total=100, Precision=9.00%, Recall=9.00%, F1=9.00%
+  joy: TP=160, FP=180, FN=1440, Total=1600, Precision=47.06%, Recall=10.00%, F1=16.49%
+  noemo: TP=44, FP=197, FN=956, Total=1000, Precision=18.26%, Recall=4.40%, F1=7.09%
+  fear: TP=963, FP=1893, FN=637, Total=1600, Precision=33.72%, Recall=60.19%, F1=43.22%
 
 BERT_self_training_0.4 - test_pred.txt:
 Total Samples: 5100
 Accuracy: 11.90%
-Macro F1 Score: 7.78%
+Macro F1 Score: 19.44%
 Class-wise performance:
-  anger: TP=0, FP=395, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  guilt: TP=50, FP=85, FN=250, Total=300, Precision=37.04%, Recall=16.67%, F1=22.99%
-  love: TP=0, FP=168, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  noemo: TP=0, FP=280, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=70, FP=200, FN=1130, Total=1200, Precision=25.93%, Recall=5.83%, F1=9.52%
-  shame: TP=0, FP=202, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  joy: TP=410, FP=48, FN=2590, Total=3000, Precision=89.52%, Recall=13.67%, F1=23.71%
-  fear: TP=0, FP=1935, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=77, FP=38, FN=523, Total=600, Precision=66.96%, Recall=12.83%, F1=21.54%
+  anger: TP=0, FP=395, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  love: TP=0, FP=168, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   sadness: TP=0, FP=1142, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  shame: TP=0, FP=202, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  surprise: TP=70, FP=200, FN=1130, Total=1200, Precision=25.93%, Recall=5.83%, F1=9.52%
+  guilt: TP=50, FP=85, FN=250, Total=300, Precision=37.04%, Recall=16.67%, F1=22.99%
+  joy: TP=410, FP=48, FN=2590, Total=3000, Precision=89.52%, Recall=13.67%, F1=23.71%
+  noemo: TP=0, FP=280, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=0, FP=1935, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
 
 BERT_self_training_0.4_balance_label - dev_v0_pred.txt:
 Total Samples: 4200
 Accuracy: 53.88%
-Macro F1 Score: 25.70%
+Macro F1 Score: 51.41%
 Class-wise performance:
-  anger: TP=488, FP=77, FN=312, Total=800, Precision=86.37%, Recall=61.00%, F1=71.50%
-  guilt: TP=0, FP=219, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  love: TP=148, FP=21, FN=252, Total=400, Precision=87.57%, Recall=37.00%, F1=52.02%
-  noemo: TP=0, FP=70, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=0, FP=48, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  shame: TP=13, FP=10, FN=87, Total=100, Precision=56.52%, Recall=13.00%, F1=21.14%
-  fear: TP=749, FP=421, FN=851, Total=1600, Precision=64.02%, Recall=46.81%, F1=54.08%
-  joy: TP=0, FP=246, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=0, FP=22, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  anger: TP=488, FP=77, FN=312, Total=800, Precision=86.37%, Recall=61.00%, F1=71.50%
+  love: TP=148, FP=21, FN=252, Total=400, Precision=87.57%, Recall=37.00%, F1=52.02%
   sadness: TP=865, FP=803, FN=435, Total=1300, Precision=51.86%, Recall=66.54%, F1=58.29%
+  shame: TP=13, FP=10, FN=87, Total=100, Precision=56.52%, Recall=13.00%, F1=21.14%
+  surprise: TP=0, FP=48, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  guilt: TP=0, FP=219, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  joy: TP=0, FP=246, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  noemo: TP=0, FP=70, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=749, FP=421, FN=851, Total=1600, Precision=64.02%, Recall=46.81%, F1=54.08%
 
 BERT_self_training_0.4_balance_label - dev_pred.txt:
 Total Samples: 7700
 Accuracy: 36.71%
 Macro F1 Score: 30.41%
 Class-wise performance:
-  anger: TP=488, FP=293, FN=312, Total=800, Precision=62.48%, Recall=61.00%, F1=61.73%
-  guilt: TP=77, FP=350, FN=23, Total=100, Precision=18.03%, Recall=77.00%, F1=29.22%
-  love: TP=148, FP=118, FN=252, Total=400, Precision=55.64%, Recall=37.00%, F1=44.44%
-  noemo: TP=39, FP=107, FN=961, Total=1000, Precision=26.71%, Recall=3.90%, F1=6.81%
-  surprise: TP=24, FP=127, FN=476, Total=500, Precision=15.89%, Recall=4.80%, F1=7.37%
-  shame: TP=13, FP=25, FN=87, Total=100, Precision=34.21%, Recall=13.00%, F1=18.84%
-  fear: TP=749, FP=1419, FN=851, Total=1600, Precision=34.55%, Recall=46.81%, F1=39.76%
-  joy: TP=381, FP=395, FN=1219, Total=1600, Precision=49.10%, Recall=23.81%, F1=32.07%
   disgust: TP=43, FP=43, FN=257, Total=300, Precision=50.00%, Recall=14.33%, F1=22.28%
+  anger: TP=488, FP=293, FN=312, Total=800, Precision=62.48%, Recall=61.00%, F1=61.73%
+  love: TP=148, FP=118, FN=252, Total=400, Precision=55.64%, Recall=37.00%, F1=44.44%
   sadness: TP=865, FP=1996, FN=435, Total=1300, Precision=30.23%, Recall=66.54%, F1=41.58%
+  shame: TP=13, FP=25, FN=87, Total=100, Precision=34.21%, Recall=13.00%, F1=18.84%
+  surprise: TP=24, FP=127, FN=476, Total=500, Precision=15.89%, Recall=4.80%, F1=7.37%
+  guilt: TP=77, FP=350, FN=23, Total=100, Precision=18.03%, Recall=77.00%, F1=29.22%
+  joy: TP=381, FP=395, FN=1219, Total=1600, Precision=49.10%, Recall=23.81%, F1=32.07%
+  noemo: TP=39, FP=107, FN=961, Total=1000, Precision=26.71%, Recall=3.90%, F1=6.81%
+  fear: TP=749, FP=1419, FN=851, Total=1600, Precision=34.55%, Recall=46.81%, F1=39.76%
 
 BERT_self_training_0.4_balance_label - test_pred.txt:
 Total Samples: 5100
 Accuracy: 25.37%
-Macro F1 Score: 12.50%
+Macro F1 Score: 31.26%
 Class-wise performance:
-  anger: TP=0, FP=364, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  guilt: TP=81, FP=88, FN=219, Total=300, Precision=47.93%, Recall=27.00%, F1=34.54%
-  love: TP=0, FP=452, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  noemo: TP=0, FP=23, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=81, FP=47, FN=1119, Total=1200, Precision=63.28%, Recall=6.75%, F1=12.20%
-  shame: TP=0, FP=534, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  joy: TP=1013, FP=266, FN=1987, Total=3000, Precision=79.20%, Recall=33.77%, F1=47.35%
-  fear: TP=0, FP=1174, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=119, FP=50, FN=481, Total=600, Precision=70.41%, Recall=19.83%, F1=30.95%
+  anger: TP=0, FP=364, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  love: TP=0, FP=452, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   sadness: TP=0, FP=808, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  shame: TP=0, FP=534, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  surprise: TP=81, FP=47, FN=1119, Total=1200, Precision=63.28%, Recall=6.75%, F1=12.20%
+  guilt: TP=81, FP=88, FN=219, Total=300, Precision=47.93%, Recall=27.00%, F1=34.54%
+  joy: TP=1013, FP=266, FN=1987, Total=3000, Precision=79.20%, Recall=33.77%, F1=47.35%
+  noemo: TP=0, FP=23, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=0, FP=1174, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
 
 BERT_self_training_0.8 - dev_v0_pred.txt:
 Total Samples: 4200
 Accuracy: 61.38%
-Macro F1 Score: 33.23%
+Macro F1 Score: 66.45%
 Class-wise performance:
-  anger: TP=577, FP=84, FN=223, Total=800, Precision=87.29%, Recall=72.12%, F1=78.99%
-  guilt: TP=0, FP=38, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  love: TP=191, FP=25, FN=209, Total=400, Precision=88.43%, Recall=47.75%, F1=62.01%
-  noemo: TP=0, FP=18, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=0, FP=99, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  shame: TP=66, FP=18, FN=34, Total=100, Precision=78.57%, Recall=66.00%, F1=71.74%
-  fear: TP=908, FP=541, FN=692, Total=1600, Precision=62.66%, Recall=56.75%, F1=59.56%
-  joy: TP=0, FP=117, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=0, FP=30, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  anger: TP=577, FP=84, FN=223, Total=800, Precision=87.29%, Recall=72.12%, F1=78.99%
+  love: TP=191, FP=25, FN=209, Total=400, Precision=88.43%, Recall=47.75%, F1=62.01%
   sadness: TP=836, FP=652, FN=464, Total=1300, Precision=56.18%, Recall=64.31%, F1=59.97%
+  shame: TP=66, FP=18, FN=34, Total=100, Precision=78.57%, Recall=66.00%, F1=71.74%
+  surprise: TP=0, FP=99, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  guilt: TP=0, FP=38, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  joy: TP=0, FP=117, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  noemo: TP=0, FP=18, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=908, FP=541, FN=692, Total=1600, Precision=62.66%, Recall=56.75%, F1=59.56%
 
 BERT_self_training_0.8 - dev_pred.txt:
 Total Samples: 7700
 Accuracy: 37.68%
 Macro F1 Score: 32.84%
 Class-wise performance:
-  anger: TP=577, FP=397, FN=223, Total=800, Precision=59.24%, Recall=72.12%, F1=65.05%
-  guilt: TP=33, FP=74, FN=67, Total=100, Precision=30.84%, Recall=33.00%, F1=31.88%
-  love: TP=191, FP=194, FN=209, Total=400, Precision=49.61%, Recall=47.75%, F1=48.66%
-  noemo: TP=2, FP=38, FN=998, Total=1000, Precision=5.00%, Recall=0.20%, F1=0.38%
-  surprise: TP=37, FP=230, FN=463, Total=500, Precision=13.86%, Recall=7.40%, F1=9.65%
-  shame: TP=66, FP=96, FN=34, Total=100, Precision=40.74%, Recall=66.00%, F1=50.38%
-  fear: TP=908, FP=1739, FN=692, Total=1600, Precision=34.30%, Recall=56.75%, F1=42.76%
-  joy: TP=222, FP=211, FN=1378, Total=1600, Precision=51.27%, Recall=13.88%, F1=21.84%
   disgust: TP=29, FP=62, FN=271, Total=300, Precision=31.87%, Recall=9.67%, F1=14.83%
+  anger: TP=577, FP=397, FN=223, Total=800, Precision=59.24%, Recall=72.12%, F1=65.05%
+  love: TP=191, FP=194, FN=209, Total=400, Precision=49.61%, Recall=47.75%, F1=48.66%
   sadness: TP=836, FP=1758, FN=464, Total=1300, Precision=32.23%, Recall=64.31%, F1=42.94%
+  shame: TP=66, FP=96, FN=34, Total=100, Precision=40.74%, Recall=66.00%, F1=50.38%
+  surprise: TP=37, FP=230, FN=463, Total=500, Precision=13.86%, Recall=7.40%, F1=9.65%
+  guilt: TP=33, FP=74, FN=67, Total=100, Precision=30.84%, Recall=33.00%, F1=31.88%
+  joy: TP=222, FP=211, FN=1378, Total=1600, Precision=51.27%, Recall=13.88%, F1=21.84%
+  noemo: TP=2, FP=38, FN=998, Total=1000, Precision=5.00%, Recall=0.20%, F1=0.38%
+  fear: TP=908, FP=1739, FN=692, Total=1600, Precision=34.30%, Recall=56.75%, F1=42.76%
 
 BERT_self_training_0.8 - test_pred.txt:
 Total Samples: 5100
 Accuracy: 11.08%
-Macro F1 Score: 9.22%
+Macro F1 Score: 23.04%
 Class-wise performance:
-  anger: TP=0, FP=326, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  guilt: TP=82, FP=97, FN=218, Total=300, Precision=45.81%, Recall=27.33%, F1=34.24%
-  love: TP=0, FP=91, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  noemo: TP=0, FP=14, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=85, FP=100, FN=1115, Total=1200, Precision=45.95%, Recall=7.08%, F1=12.27%
-  shame: TP=0, FP=226, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  joy: TP=290, FP=25, FN=2710, Total=3000, Precision=92.06%, Recall=9.67%, F1=17.50%
-  fear: TP=0, FP=2542, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=108, FP=59, FN=492, Total=600, Precision=64.67%, Recall=18.00%, F1=28.16%
+  anger: TP=0, FP=326, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  love: TP=0, FP=91, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   sadness: TP=0, FP=1055, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  shame: TP=0, FP=226, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  surprise: TP=85, FP=100, FN=1115, Total=1200, Precision=45.95%, Recall=7.08%, F1=12.27%
+  guilt: TP=82, FP=97, FN=218, Total=300, Precision=45.81%, Recall=27.33%, F1=34.24%
+  joy: TP=290, FP=25, FN=2710, Total=3000, Precision=92.06%, Recall=9.67%, F1=17.50%
+  noemo: TP=0, FP=14, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=0, FP=2542, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
 
 BERT_self_training_0.8_balance_label - dev_v0_pred.txt:
 Total Samples: 4200
 Accuracy: 51.14%
-Macro F1 Score: 27.41%
+Macro F1 Score: 54.83%
 Class-wise performance:
-  anger: TP=643, FP=381, FN=157, Total=800, Precision=62.79%, Recall=80.38%, F1=70.50%
-  guilt: TP=0, FP=96, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  love: TP=166, FP=33, FN=234, Total=400, Precision=83.42%, Recall=41.50%, F1=55.43%
-  noemo: TP=0, FP=161, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=0, FP=45, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  shame: TP=81, FP=141, FN=19, Total=100, Precision=36.49%, Recall=81.00%, F1=50.31%
-  fear: TP=521, FP=296, FN=1079, Total=1600, Precision=63.77%, Recall=32.56%, F1=43.11%
-  joy: TP=0, FP=168, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=0, FP=78, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  anger: TP=643, FP=381, FN=157, Total=800, Precision=62.79%, Recall=80.38%, F1=70.50%
+  love: TP=166, FP=33, FN=234, Total=400, Precision=83.42%, Recall=41.50%, F1=55.43%
   sadness: TP=737, FP=653, FN=563, Total=1300, Precision=53.02%, Recall=56.69%, F1=54.80%
+  shame: TP=81, FP=141, FN=19, Total=100, Precision=36.49%, Recall=81.00%, F1=50.31%
+  surprise: TP=0, FP=45, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  guilt: TP=0, FP=96, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  joy: TP=0, FP=168, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  noemo: TP=0, FP=161, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=521, FP=296, FN=1079, Total=1600, Precision=63.77%, Recall=32.56%, F1=43.11%
 
 BERT_self_training_0.8_balance_label - dev_pred.txt:
 Total Samples: 7700
 Accuracy: 32.99%
 Macro F1 Score: 27.20%
 Class-wise performance:
-  anger: TP=643, FP=1090, FN=157, Total=800, Precision=37.10%, Recall=80.38%, F1=50.77%
-  guilt: TP=30, FP=168, FN=70, Total=100, Precision=15.15%, Recall=30.00%, F1=20.13%
-  love: TP=166, FP=193, FN=234, Total=400, Precision=46.24%, Recall=41.50%, F1=43.74%
-  noemo: TP=60, FP=245, FN=940, Total=1000, Precision=19.67%, Recall=6.00%, F1=9.20%
-  surprise: TP=33, FP=134, FN=467, Total=500, Precision=19.76%, Recall=6.60%, F1=9.90%
-  shame: TP=81, FP=354, FN=19, Total=100, Precision=18.62%, Recall=81.00%, F1=30.28%
-  fear: TP=521, FP=1010, FN=1079, Total=1600, Precision=34.03%, Recall=32.56%, F1=33.28%
-  joy: TP=243, FP=267, FN=1357, Total=1600, Precision=47.65%, Recall=15.19%, F1=23.03%
   disgust: TP=26, FP=182, FN=274, Total=300, Precision=12.50%, Recall=8.67%, F1=10.24%
+  anger: TP=643, FP=1090, FN=157, Total=800, Precision=37.10%, Recall=80.38%, F1=50.77%
+  love: TP=166, FP=193, FN=234, Total=400, Precision=46.24%, Recall=41.50%, F1=43.74%
   sadness: TP=737, FP=1517, FN=563, Total=1300, Precision=32.70%, Recall=56.69%, F1=41.47%
+  shame: TP=81, FP=354, FN=19, Total=100, Precision=18.62%, Recall=81.00%, F1=30.28%
+  surprise: TP=33, FP=134, FN=467, Total=500, Precision=19.76%, Recall=6.60%, F1=9.90%
+  guilt: TP=30, FP=168, FN=70, Total=100, Precision=15.15%, Recall=30.00%, F1=20.13%
+  joy: TP=243, FP=267, FN=1357, Total=1600, Precision=47.65%, Recall=15.19%, F1=23.03%
+  noemo: TP=60, FP=245, FN=940, Total=1000, Precision=19.67%, Recall=6.00%, F1=9.20%
+  fear: TP=521, FP=1010, FN=1079, Total=1600, Precision=34.03%, Recall=32.56%, F1=33.28%
 
 BERT_self_training_0.8_balance_label - test_pred.txt:
 Total Samples: 5100
 Accuracy: 21.76%
-Macro F1 Score: 10.42%
+Macro F1 Score: 26.06%
 Class-wise performance:
-  anger: TP=0, FP=645, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  guilt: TP=40, FP=116, FN=260, Total=300, Precision=25.64%, Recall=13.33%, F1=17.54%
-  love: TP=0, FP=442, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  noemo: TP=0, FP=100, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  surprise: TP=106, FP=29, FN=1094, Total=1200, Precision=78.52%, Recall=8.83%, F1=15.88%
-  shame: TP=0, FP=639, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
-  joy: TP=816, FP=173, FN=2184, Total=3000, Precision=82.51%, Recall=27.20%, F1=40.91%
-  fear: TP=0, FP=741, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   disgust: TP=148, FP=242, FN=452, Total=600, Precision=37.95%, Recall=24.67%, F1=29.90%
+  anger: TP=0, FP=645, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  love: TP=0, FP=442, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
   sadness: TP=0, FP=863, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  shame: TP=0, FP=639, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  surprise: TP=106, FP=29, FN=1094, Total=1200, Precision=78.52%, Recall=8.83%, F1=15.88%
+  guilt: TP=40, FP=116, FN=260, Total=300, Precision=25.64%, Recall=13.33%, F1=17.54%
+  joy: TP=816, FP=173, FN=2184, Total=3000, Precision=82.51%, Recall=27.20%, F1=40.91%
+  noemo: TP=0, FP=100, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
+  fear: TP=0, FP=741, FN=0, Total=0, Precision=0.00%, Recall=0.00%, F1=0.00%
 

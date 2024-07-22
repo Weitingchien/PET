@@ -52,6 +52,26 @@ def calculate_correct_predictions(file_path):
 
 
 
+def calculate_f1_scores(class_tp, class_fp, class_fn):
+    # 計算整體的 TP, FP, FN
+    total_tp = sum(class_tp.values())
+    total_fp = sum(class_fp.values())
+    total_fn = sum(class_fn.values())
+
+    # 計算整體的 Precision 和 Recall
+    precision = total_tp / (total_tp + total_fp) if (total_tp + total_fp) > 0 else 0
+    recall = total_tp / (total_tp + total_fn) if (total_tp + total_fn) > 0 else 0
+
+    # 計算整體的 F1 分數
+    f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+
+ 
+    
+    return f1
+
+
+
+
 
 
 def calculate_macro_f1(class_tp, class_fp, class_fn):
@@ -63,7 +83,8 @@ def calculate_macro_f1(class_tp, class_fp, class_fn):
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0
         f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
-        f1_scores.append(f1)
+        if f1 > 0:  # 只有當 F1 分數大於 0 時才加入計算
+            f1_scores.append(f1)
     
     macro_f1 = sum(f1_scores) / len(f1_scores) if f1_scores else 0
     return macro_f1
@@ -73,7 +94,7 @@ def calculate_macro_f1(class_tp, class_fp, class_fn):
 
 def process_folders():
     results = []
-    for folder in ['BERT_self_training_0.2', 'BERT_self_training_0.2_balance_label', 'BERT_self_training_0.4', 'BERT_self_training_0.4_balance_label', 'BERT_self_training_0.8', 'BERT_self_training_0.8_balance_label']:
+    for folder in ['BERT_self_training_0.1', 'BERT_self_training_0.2', 'BERT_self_training_0.2_balance_label', 'BERT_self_training_0.4', 'BERT_self_training_0.4_balance_label', 'BERT_self_training_0.8', 'BERT_self_training_0.8_balance_label']:
         for file in os.listdir(folder):
             if file.endswith('_pred.txt'):
                 file_path = os.path.join(folder, file)
@@ -84,10 +105,16 @@ def process_folders():
                 
                 # 計算macro F1
                 macro_f1 = calculate_macro_f1(class_tp, class_fp, class_fn)
+                """
+                # 計算整體 F1 和修改後的 Macro F1
+                overall_f1 = calculate_f1_scores(class_tp, class_fp, class_fn)
+                """
+                
                 
                 results.append(f"{folder} - {file}:")
                 results.append(f"Total Samples: {total_samples}")
                 results.append(f"Accuracy: {accuracy:.2%}")
+                # results.append(f"Overall F1 Score: {overall_f1:.2%}")
                 results.append(f"Macro F1 Score: {macro_f1:.2%}")
                 results.append("Class-wise performance:")
                 for label in set(list(class_tp.keys()) + list(class_fp.keys()) + list(class_fn.keys())):

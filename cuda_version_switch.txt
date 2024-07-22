@@ -1,0 +1,6 @@
+source: https://blog.csdn.net/m0_60063179/article/details/128146152
+
+切換cuda-11.8
+sudo rm -rf /usr/local/cuda #刪除之前的軟連接
+sudo In -s /usr/local/cuda-11.8 /usr/local/cuda #建立cuda-11.8的軟連接
+nvcc --version #確認當前cuda版本

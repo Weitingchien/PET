@@ -561,6 +561,8 @@ def main():
     # 設定超參數
     num_iterations = 5
     early_stop_patience = 3
+    
+    batch_size = 10
 
     # Initialize pseudo-labeled data D^p
     D_p = []
@@ -577,13 +579,13 @@ def main():
 
         # seen dataset (使用 seen_class_to_hypothesis 進行訓練)
         train_dataloader = DataLoader(MatchingDataset(current_train_data, seen_class_to_hypothesis, label_map), 
-                                      batch_size=10, shuffle=True, collate_fn=lambda x: x, num_workers=12)
+                                      batch_size=batch_size, shuffle=True, collate_fn=lambda x: x, num_workers=12)
         # 開始訓練
         train(model, optimizer, criterion, train_dataloader, tokenizer, max_length, device)
 
         # unseen dataset(使用all_class_to_hypothesis 進行預測)
         unseen_dataloader = DataLoader(MatchingDataset(unseen_data, all_class_to_hypothesis, label_map), 
-                                       batch_size=10, shuffle=False, collate_fn=lambda x: x, num_workers=12)
+                                       batch_size=batch_size, shuffle=False, collate_fn=lambda x: x, num_workers=12)
         # 在未標籤數據集上預測
         csv_path = os.path.join(folder_name, 'unseen_predict_output.txt')
         confidences, original_texts = predict(model, unseen_dataloader, tokenizer, max_length, device, all_class_to_hypothesis, csv_path)
@@ -629,11 +631,11 @@ def main():
         # 評估當前模型(評估時使用 all_class_to_hypothesis)
         dev_dataloader = DataLoader(MatchingDataset([(next(counter), label, text) for label, text in dev_dataset], 
                             all_class_to_hypothesis, label_map), 
-                            batch_size=10, shuffle=False, collate_fn=lambda x: x, num_workers=12)
+                            batch_size=batch_size, shuffle=False, collate_fn=lambda x: x, num_workers=12)
 
         dev_v0_dataloader = DataLoader(MatchingDataset([(next(counter), label, text) for label, text in dev_v0_dataset], 
                             all_class_to_hypothesis, label_map), 
-                            batch_size=10, shuffle=False, collate_fn=lambda x: x, num_workers=12)
+                            batch_size=batch_size, shuffle=False, collate_fn=lambda x: x, num_workers=12)
 
         csv_path = os.path.join(folder_name, 'dev_pred.txt')
         dev_f1_score = evaluate_model(model, dev_dataloader, tokenizer, max_length, device, all_class_to_hypothesis, csv_path)
@@ -664,7 +666,7 @@ def main():
     # 最終測試時使用 all_class_to_hypothesis
     test_dataloader = DataLoader(MatchingDataset([(next(counter), label, text) for label, text in test_dataset], 
                              all_class_to_hypothesis, label_map), 
-                             batch_size=10, shuffle=False, collate_fn=lambda x: x, num_workers=12)
+                             batch_size=batch_size, shuffle=False, collate_fn=lambda x: x, num_workers=12)
 
     csv_path = os.path.join(folder_name, 'test_pred.txt')
     test_f1_score = evaluate_model(model, test_dataloader, tokenizer, max_length, device, all_class_to_hypothesis, csv_path)

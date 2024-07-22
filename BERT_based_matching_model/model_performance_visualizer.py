@@ -90,27 +90,27 @@ def create_plots(data):
     
     for metric in metrics:
         plt.figure(figsize=(20, 12))
-        bar_width = 0.1
-        index = np.arange(len(datasets))
-
-        for i, model in enumerate(models):
+        
+        for model in models:
             values = [data[model].get(dataset, {}).get(metric, 0) for dataset in datasets]
-            offset = bar_width * i
-            plt.bar(index + offset, values, bar_width, label=f'{model}')
+            plt.plot(datasets, values, marker='o', linewidth=3, markersize=12, label=f'{model}')
 
-        plt.xlabel('Datasets', fontweight='bold')
-        plt.ylabel(f'{metric} (%)', fontweight='bold')
-        plt.title(f'Comparing {metric} at different ratios', fontweight='bold')
-        plt.xticks(index + bar_width * (len(models) - 1) / 2, datasets)
-        plt.legend()
+        plt.xlabel('Datasets', fontweight='bold', fontsize=24)
+        plt.ylabel(f'{metric} (%)', fontweight='bold', fontsize=24)
+        plt.title(f'Comparing {metric} at different ratios', fontweight='bold', fontsize=28)
+        plt.legend(fontsize=24)
+        plt.grid(True, linestyle='--', alpha=0.7)
 
-        for rect in plt.gca().patches:
-            height = rect.get_height()
-            plt.text(rect.get_x() + rect.get_width()/2., height,
-                     f'{height:.2f}%', ha='center', va='bottom')
+        plt.xticks(fontsize=24)
+        plt.yticks(fontsize=24)
+
+        for model in models:
+            values = [data[model].get(dataset, {}).get(metric, 0) for dataset in datasets]
+            for i, value in enumerate(values):
+                plt.text(i, value, f'{value:.2f}%', ha='center', va='bottom', fontsize=16)
 
         plt.tight_layout()
-        plt.savefig(f'{metric}_comparison.png')
+        plt.savefig(f'{metric}_comparison_line.png')
         plt.close()
 
 
@@ -131,26 +131,33 @@ def parse_label_counts(file_path):
 
 def create_label_count_plot(data):
     datasets = ['train', 'unseen', 'dev', 'test', '(unseen)test', 'dev_v0', 'dev_v1']
-    
-    fig, axs = plt.subplots(len(datasets), 1, figsize=(15, 5*len(datasets)), squeeze=False)
-    fig.suptitle('Label Counts for Each Dataset', fontsize=16)
+    datasets_per_figure = 4  # Number of datasets to show in each figure
 
-    for i, dataset in enumerate(datasets):
-        if dataset in data:
-            labels = list(data[dataset].keys())
-            counts = list(data[dataset].values())
-            
-            axs[i, 0].bar(labels, counts)
-            axs[i, 0].set_title(f'{dataset} Dataset')
-            axs[i, 0].set_ylabel('Count')
-            axs[i, 0].tick_params(axis='x', rotation=45)
-            
-            for j, count in enumerate(counts):
-                axs[i, 0].text(j, count, str(count), ha='center', va='bottom')
+    for i in range(0, len(datasets), datasets_per_figure):
+        current_datasets = datasets[i:i+datasets_per_figure]
+        
+        fig, axs = plt.subplots(len(current_datasets), 1, figsize=(20, 8*len(current_datasets)), squeeze=False)
+        fig.suptitle(f'Label Counts for Datasets (Part {i//datasets_per_figure + 1})', fontsize=28, y=1.02)
+        
+        plt.subplots_adjust(hspace=0.6)  # 增加子圖之間的垂直間距
 
-    plt.tight_layout()
-    plt.show()
+        for j, dataset in enumerate(current_datasets):
+            if dataset in data:
+                labels = list(data[dataset].keys())
+                counts = list(data[dataset].values())
+                
+                axs[j, 0].bar(labels, counts)
+                axs[j, 0].set_title(f'{dataset} Dataset', fontsize=26, pad=20)
+                axs[j, 0].set_ylabel('Count', fontsize=24)
+                axs[j, 0].tick_params(axis='both', which='major', labelsize=24)
+                axs[j, 0].tick_params(axis='x')
+                
+                for k, count in enumerate(counts):
+                    axs[j, 0].text(k, count, str(count), ha='center', va='bottom', fontsize=20)
 
+        plt.tight_layout()
+        plt.savefig(f'label_counts_part{i//datasets_per_figure + 1}.png', bbox_inches='tight', pad_inches=0.5, dpi=300)
+        plt.close()
 
 
 
