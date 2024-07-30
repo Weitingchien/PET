@@ -1,12 +1,15 @@
 import os
 import csv
+import time
+import json
 import torch
 import random
 import argparse
 import numpy as np
 import torch.nn as nn
 from transformers import BertTokenizer, BertModel
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, ConcatDataset
+
 
 
 from tqdm import tqdm
@@ -14,13 +17,27 @@ from itertools import count
 from collections import Counter
 from sklearn.metrics import f1_score
 
+from time_utils import write_time_info
+from data_logging import write_samples_to_file, write_D_p_to_file
+
 from label_counter import count_label_samples
 
 
 
+def filter_function(x, sorted_selected_ids):
+    id_value = int(x[0])
+    is_not_in_selected = id_value not in sorted_selected_ids
+    print(f"ID: {id_value}, Is not in selected: {is_not_in_selected}")
+    return is_not_in_selected
+
+"""
 def get_related_ids(sample_id, num_hypotheses):
-    base_id = (sample_id - 1) * num_hypotheses + 1
-    return set(range(base_id, base_id + num_hypotheses))
+    # 計算每個樣本的第一個ID
+    sample_id = int(sample_id)
+    base_sample_id = ((sample_id - 1) // num_hypotheses) * num_hypotheses + 1
+    # 返回這個樣本對應的所有ID
+    return set(range(base_sample_id, base_sample_id + num_hypotheses))
+"""
 
 
 
@@ -58,7 +75,7 @@ def process_prediction_output(file_path, class_to_hypothesis):
     if current_sample:
         samples.append(current_sample)
     
-    # 计算每个样本的最高置信度
+    # 計算每個樣本的最高置信度
     for sample in samples:
         if sample["probabilities"]:
             sample["max_confidence"] = max(sample["probabilities"].values())
@@ -446,7 +463,7 @@ def main():
 
     # 數據集路徑
     train_file = './datasets/emotion/train_pu_half_v0.txt'
-    unseen_data_file = './datasets/emotion/train_pu_half_v1.txt'
+    unseen_data_file = './datasets/emotion/train_pu_half_v1_deduplication.txt'
     dev_file = './datasets/emotion/dev.txt'
     dev_v0_file = './datasets/emotion/dev_v0.txt'
     dev_v1_file = './datasets/emotion/dev_v1.txt'
@@ -495,6 +512,7 @@ def main():
     dev_dataset = EmotionDataset(dev_file, max_samples=max_samples)
     dev_v0_dataset = EmotionDataset(dev_v0_file, max_samples=max_samples)
     test_dataset = EmotionDataset(test_file_I, max_samples=max_samples)
+    counter = count(start=1)
     unseen_dataset_with_id = [(next(counter), label, text) for label, text in unseen_dataset]
 
     # 假設有一下seen classes和對應的hypothesis(train_pu_half_v0.txt訓練集的標籤描述)
@@ -514,7 +532,17 @@ def main():
         'surprise': 'This text expresses surprise.',
     }
     """
-
+    seen_and_pseudo_class_to_hypothesis = {
+        'shame': 'This text expresses shame.',
+        'sadness': 'This text expresses sadness.',
+        'love': 'This text expresses love.',
+        'fear': 'This text expresses fear.',
+        'anger': 'This text expresses anger.',
+        'joy': 'This text expresses joy.',
+        'guilt': 'This text expresses guilt.',
+        'disgust': 'This text expresses disgust.',
+        'surprise': 'This text expresses surprise.',
+    }
     # 所有可能的類別（用於評估和預測）
     all_class_to_hypothesis = {
         'shame': 'This text expresses shame.',
@@ -566,26 +594,44 @@ def main():
 
     # Initialize pseudo-labeled data D^p
     D_p = []
+    all_D_p = []
     best_f1 = 0
     no_improvement_count = 0
 
     unseen_data = unseen_dataset_with_id.copy()
+    
+    start_time = time.time()
 
     for iteration in range(num_iterations):
-        print(f"\nIteration {iteration+1}/{num_iterations}")
-        # 訓練matching model f
-        current_train_data = train_data + D_p
         
-
+        print(f"\nIteration {iteration+1}/{num_iterations}")
+        print(f"Current unseen_data size at the start of iteration: {len(unseen_data)}")
         # seen dataset (使用 seen_class_to_hypothesis 進行訓練)
-        train_dataloader = DataLoader(MatchingDataset(current_train_data, seen_class_to_hypothesis, label_map), 
+        train_dataloader = DataLoader(MatchingDataset(train_data, seen_class_to_hypothesis, label_map), 
                                       batch_size=batch_size, shuffle=True, collate_fn=lambda x: x, num_workers=12)
-        # 開始訓練
-        train(model, optimizer, criterion, train_dataloader, tokenizer, max_length, device)
-
-        # unseen dataset(使用all_class_to_hypothesis 進行預測)
         unseen_dataloader = DataLoader(MatchingDataset(unseen_data, all_class_to_hypothesis, label_map), 
                                        batch_size=batch_size, shuffle=False, collate_fn=lambda x: x, num_workers=12)
+        print(f"Unseen dataloader size: {len(unseen_dataloader.dataset)}")
+
+        if D_p:
+            # unseen dataset
+            D_p_dataloader = DataLoader(MatchingDataset(D_p, seen_and_pseudo_class_to_hypothesis, label_map), 
+                                    batch_size=batch_size, shuffle=True, collate_fn=lambda x: x, num_workers=12)
+            print(f"Iteration {iteration+1}: Size of D_p_dataloader dataset: {len(D_p_dataloader.dataset)}")
+            # seen dataset與unseen dataset合併
+            combined_dataset = ConcatDataset([train_dataloader.dataset, D_p_dataloader.dataset])
+        else:
+            combined_dataset = train_dataloader.dataset
+
+        combined_dataloader = DataLoader(combined_dataset, 
+                                 batch_size=batch_size, shuffle=True, collate_fn=lambda x: x, num_workers=12)
+
+        samples_file_path = os.path.join(folder_name, f'iteration_{iteration+1}_samples.txt')
+        write_samples_to_file(combined_dataloader, samples_file_path)
+
+        #  訓練matching model f
+        train(model, optimizer, criterion, combined_dataloader, tokenizer, max_length, device)
+       
         # 在未標籤數據集上預測
         csv_path = os.path.join(folder_name, 'unseen_predict_output.txt')
         confidences, original_texts = predict(model, unseen_dataloader, tokenizer, max_length, device, all_class_to_hypothesis, csv_path)
@@ -594,45 +640,75 @@ def main():
         processed_samples = process_prediction_output(csv_path, all_class_to_hypothesis)
         
         sorted_samples = sorted(processed_samples, key=lambda x: x["max_confidence"], reverse=True)
+        sorted_samples_file_path = os.path.join(folder_name, 'sorted_confidence_samples.txt')
+        with open(sorted_samples_file_path, 'w', encoding='utf-8') as f:
+            for sample in sorted_samples:
+                f.write(json.dumps(sample) + '\n')
 
-        # samples = [sample for sample in sorted_samples]
-        # print(f'samples{samples}')
+        print(f"Sorted samples have been saved to {sorted_samples_file_path}")
+
         
         # 計算應選擇的樣本數量
         initial_unlabeled_samples = len(unseen_data)
-        # print(f'initial_unlabeled_samples: {initial_unlabeled_samples}')
         selection_number = calculate_selection_number(initial_unlabeled_samples, iteration + 1, ratio)
         selection_number_file = os.path.join(folder_name, 'selection_numbers.txt')
         with open(selection_number_file, 'a') as f:
             f.write(f"Iteration {iteration + 1}: {selection_number}\n")
-        # print(f'selection_number: {selection_number}')
 
         # 選擇高置信度的樣本
-        new_pseudo_labeled = [(unseen_dataset.get_id_for_text(sample["original_text"]), sample["original_text"], sample["predicted_label"]) 
-                      for sample in sorted_samples[:selection_number]]
-        # print(f'new_pseudo_labeled: {new_pseudo_labeled} len(new_pseudo_labeled): {len(new_pseudo_labeled)}')
+        sorted_samples = sorted_samples[:selection_number]
+        new_pseudo_labeled = [(unseen_dataset.get_id_for_text(sample["original_text"]), sample["predicted_label"], sample["original_text"]) 
+                      for sample in sorted_samples]
+        print(f"Number of samples in new_pseudo_labeled: {len(new_pseudo_labeled)}")
 
         # 更新偽標籤數據集
+        if iteration > 0:
+            D_p = []
         D_p.extend(new_pseudo_labeled)
-        selected_ids = set()
-        for id, _, _ in new_pseudo_labeled:
-            # 找到當前樣本的其他正負樣本, 例如Selected IDs: {16, 2, 93}對於16這個ID就會有10至19的ID
-            selected_ids.update(get_related_ids(id, len(all_class_to_hypothesis)))
-        sorted_selected_ids = sorted(selected_ids)
-        # print(f"Selected IDs: {sorted_selected_ids}")
+        all_D_p.extend(new_pseudo_labeled)
+        print(f"Number of samples in D_p after extension: {len(D_p)}")
+        write_D_p_to_file(D_p, iteration + 1, folder_name)
 
-        print(f"Unseen dataset size before removal: {len(unseen_data)}")
+        selected_ids = []
+        for id, _, _ in D_p:
+            selected_ids.append(int(id))
+            # print(f"Selected IDs: {selected_ids} type: {type(selected_ids)}")
+        sorted_selected_ids = sorted(selected_ids)
+        selected_ids_file = os.path.join(folder_name, "selected_ids.json")
+        # 將整個 sorted_selected_ids 列表直接寫入文件
+        with open(selected_ids_file, 'w') as f:
+            json.dump(sorted_selected_ids, f)
+        print(f"Sorted selected IDs have been saved to {selected_ids_file}")
+        
+
+        print(f"Original unseen_data size: {len(unseen_data)}")
         # 從未標記數據集中移除被選中的樣本
-        unseen_data = [item for item in unseen_data if item[0] not in sorted_selected_ids]
-        print(f"Unseen dataset size after removal: {len(unseen_data)}")
+        filtered_data = []
+        removed_ids = []
+        for item in unseen_data:
+            if filter_function(item, sorted_selected_ids):
+                filtered_data.append(item)
+            else:
+                removed_ids.append(int(item[0]))
+                # print(f"Removed item with ID: {item[0]}")
+        # 將移除的ID寫入文件
+        removed_ids_file = os.path.join(folder_name, "removed_ids.json")
+        with open(removed_ids_file, 'w') as f:
+            json.dump(removed_ids, f)
+
+        print(f"Filtered data size: {len(filtered_data)}")
+        print(f"Number of items removed: {len(unseen_data) - len(filtered_data)}")
+
+        unseen_data = filtered_data
 
 
 
         # 評估當前模型(評估時使用 all_class_to_hypothesis)
+        counter = count(start=1)
         dev_dataloader = DataLoader(MatchingDataset([(next(counter), label, text) for label, text in dev_dataset], 
                             all_class_to_hypothesis, label_map), 
                             batch_size=batch_size, shuffle=False, collate_fn=lambda x: x, num_workers=12)
-
+        counter = count(start=1)
         dev_v0_dataloader = DataLoader(MatchingDataset([(next(counter), label, text) for label, text in dev_v0_dataset], 
                             all_class_to_hypothesis, label_map), 
                             batch_size=batch_size, shuffle=False, collate_fn=lambda x: x, num_workers=12)
@@ -660,18 +736,24 @@ def main():
             print("Early stopping")
             break
 
+    print(f"Final unseen_data size after all iterations: {len(unseen_data)}")
+
     # 加載最佳模型並在測試集上評估
     model.load_state_dict(torch.load("best_model.pt"))
 
     # 最終測試時使用 all_class_to_hypothesis
+    counter = count(start=1)
     test_dataloader = DataLoader(MatchingDataset([(next(counter), label, text) for label, text in test_dataset], 
                              all_class_to_hypothesis, label_map), 
                              batch_size=batch_size, shuffle=False, collate_fn=lambda x: x, num_workers=12)
 
     csv_path = os.path.join(folder_name, 'test_pred.txt')
     test_f1_score = evaluate_model(model, test_dataloader, tokenizer, max_length, device, all_class_to_hypothesis, csv_path)
-    
+
+    end_time = time.time()
+    total_time = end_time - start_time
     print(f"Test F1 score: {test_f1_score:.4f}")
+    write_time_info(folder_name, total_time, num_iterations)
 
     # 記錄 Test F1 score
     test_f1_scores.append(test_f1_score)
